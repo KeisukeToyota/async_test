@@ -6,15 +6,17 @@
 import { Component, Vue } from 'vue-property-decorator'
 import axios from 'axios'
 
-const BASE_URL = 'http://127.0.0.1:5042/'
+const BASE_URL = 'http://127.0.0.1:5042'
 
 @Component
 export default class Button extends Vue {
   public text: string = 'Button'
 
   public changeText () {
-    axios.get(BASE_URL).then((res) => {
-      this.text = res.data['text']
+    axios.post(BASE_URL + '/hello', {
+      'n': this.$store.state.n
+    }).then((res) => {
+      this.$store.state.n = res.data['n']
     })
   }
 }
